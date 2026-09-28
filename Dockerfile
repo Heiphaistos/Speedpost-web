@@ -10,6 +10,8 @@ COPY package.json ./
 COPY src ./src
 COPY public ./public
 ENV HOST=0.0.0.0 PORT=3080 DATA_DIR=/data
+# Le volume hérite du propriétaire du dossier : sans ça, /data appartient à root et SQLite ne peut pas créer sa base
+RUN mkdir -p /data && chown node:node /data
 VOLUME /data
 EXPOSE 3080
 USER node
