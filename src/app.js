@@ -38,8 +38,9 @@ export async function buildApp(config, { logger = false, mailer = createMailer(c
     if (config.publicUrl.startsWith('https')) reply.header('Strict-Transport-Security', 'max-age=31536000');
     return payload;
   });
-  // Liens courts : /d/<id>#<clé> et /u → page unique
-  app.get('/d/:id', (_req, reply) => reply.sendFile('index.html'));
+  // Application : /app (envoi, mes envois) et liens courts /d/<id>#<clé> ; le reste du site est statique (vitrine)
+  app.get('/app', (_req, reply) => reply.sendFile('app.html'));
+  app.get('/d/:id', (_req, reply) => reply.sendFile('app.html'));
 
   const RL = (max) => ({ config: { rateLimit: { max, timeWindow: '1 minute' } } });
   const err = (reply, status, error, extra = {}) => reply.status(status).send({ ok: false, error, ...extra });
@@ -58,6 +59,27 @@ export async function buildApp(config, { logger = false, mailer = createMailer(c
   });
 
   app.get('/health', async () => ({ ok: true }));
+
+  // ---- Applications Windows / Linux proposées sur la page Télécharger ----
+  const platformOf = (name) => (/\.(exe|msi)$/i.test(name) ? 'windows' : /\.(appimage|deb|rpm|tar\.gz)$/i.test(name) ? 'linux' : null);
+  app.get('/api/downloads', async () => {
+    let files = [];
+    try {
+      files = fs.readdirSync(config.downloadsDir).filter((n) => platformOf(n) && !n.startsWith('.'))
+        .map((n) => { const st = fs.statSync(path.join(config.downloadsDir, n)); return { name: n, platform: platformOf(n), size: st.size, sizeText: fmtSize(st.size), updatedAt: st.mtimeMs, url: `/downloads/${encodeURIComponent(n)}` }; })
+        .sort((a, b) => b.updatedAt - a.updatedAt);
+    } catch { /* dossier absent */ }
+    return { ok: true, files, releases: { windows: config.windowsReleases, linux: config.linuxReleases } };
+  });
+  app.get('/downloads/:name', RL(60), async (request, reply) => {
+    const name = path.basename(String(request.params.name));
+    const file = path.join(config.downloadsDir, name);
+    if (!platformOf(name) || !fs.existsSync(file)) return err(reply, 404, 'Fichier introuvable');
+    reply.header('content-type', 'application/octet-stream');
+    reply.header('content-disposition', `attachment; filename="${name.replace(/"/g, '')}"`);
+    reply.header('content-length', String(fs.statSync(file).size));
+    return reply.send(fs.createReadStream(file));
+  });
   app.get('/api/config', async () => ({
     ok: true, appName: config.appName, maxFileBytes: config.maxFileBytes, maxFiles: config.maxFilesPerTransfer, defaultDays: config.defaultDays, maxDays: config.maxDays,
     needsPassword: !!config.uploadPassword, mail: !!mailer,

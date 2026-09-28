@@ -1,9 +1,12 @@
-# SpeedPost
+# SpeedPost — Web
+
+Serveur, **site vitrine** et **application web** de SpeedPost. Applications de bureau : [SpeedPost-Windows](https://github.com/Heiphaistos/SpeedPost-Windows) · [SpeedPost-Linux](https://github.com/Heiphaistos/SpeedPost-Linux).
 
 Transfert de fichiers **chiffré et auto-hébergé**, façon WeTransfer / SwissTransfer : on dépose des fichiers, on obtient **un simple lien** à partager. Pas de compte, e-mail facultatif.
 
-- 🌐 **Application web** hébergée sur votre VPS (ex. `https://speedpost.mondomaine.fr`)
-- 🪟 **Application Windows** : glisser-déposer, clic droit → *Envoyer vers → SpeedPost*, lien copié automatiquement, notification, historique
+- 🌐 **Site vitrine** (accueil, fonctionnalités, sécurité, applications, FAQ, confidentialité) et **application web** sur `/app`, hébergés sur votre VPS (ex. `https://speedpost.mondomaine.fr`)
+- 🪟🐧 **Applications Windows et Linux** (dépôts séparés) : glisser-déposer, clic droit sur un fichier, lien copié automatiquement, notification, historique
+- ⬇️ Page **Applications** : déposez les `.exe`, `.AppImage` et `.deb` dans `DATA_DIR/downloads` (ou `DOWNLOADS_DIR`), ils sont proposés automatiquement (repli sur les releases GitHub)
 - 🔐 **Chiffrement AES-256-GCM** : une clé aléatoire par envoi, qui n'existe **que dans le lien** (`/d/<id>#<clé>`). Le serveur ne l'enregistre jamais : sans le lien, fichiers, noms, titre, message et e-mails sont illisibles, même pour l'administrateur.
 - 📦 Plusieurs fichiers, jusqu'à 10 Go chacun (réglable), envoi par morceaux de 48 Mo **avec reprise automatique** (coupure réseau, Cloudflare…), téléchargements avec reprise
 - ⏳ Expiration (1 à 365 jours), nombre de téléchargements maximum, mot de passe facultatif
@@ -17,7 +20,7 @@ Transfert de fichiers **chiffré et auto-hébergé**, façon WeTransfer / SwissT
 1. Créez l'enregistrement DNS `speedpost.mondomaine.fr` (type A) vers l'IP du VPS.
 2. Sur le VPS :
    ```bash
-   git clone https://github.com/Heiphaistos/SpeedPost.git && cd SpeedPost
+   git clone https://github.com/Heiphaistos/SpeedPost-Web.git && cd SpeedPost-Web
    sudo bash deploy/install.sh speedpost.mondomaine.fr
    ```
    Le script installe Node 22, nginx et le certificat HTTPS (Let's Encrypt), crée le service `speedpost` (systemd) et stocke les données dans `/var/lib/speedpost`.
@@ -29,22 +32,22 @@ Mise à jour : `git pull && sudo cp -r src public package.json /opt/speedpost/ &
 
 Avec Docker : `docker build -t speedpost . && docker run -d -p 127.0.0.1:3080:3080 -v speedpost:/data -e PUBLIC_URL=https://speedpost.mondomaine.fr speedpost` (derrière nginx : `deploy/nginx.conf`).
 
-## Application Windows
+## Site et pages
 
-Téléchargez l'installateur ou la version portable dans les **Releases** (générées automatiquement par GitHub Actions à chaque tag `v*`, ou à la demande : *Actions → Application Windows → Run workflow*).
+| Adresse | Contenu |
+| --- | --- |
+| `/` | Accueil (vitrine) |
+| `/fonctionnalites.html`, `/securite.html`, `/telecharger.html`, `/faq.html`, `/confidentialite.html` | Pages du site |
+| `/app` | Application d'envoi (et `/app#envois` : Mes envois) |
+| `/d/<id>#<clé>` | Page de téléchargement |
 
-Au premier lancement, indiquez l'adresse de votre serveur dans **Réglages**. Ensuite :
-- glissez des fichiers dans la fenêtre, ou clic droit sur un fichier → **Envoyer vers → SpeedPost** ;
-- le lien est copié dans le presse-papiers dès la fin de l'envoi ;
-- **Mes envois** : recopier un lien, l'ouvrir, supprimer le transfert du serveur.
-
-Développement : `cd desktop && npm install && npm start` (`SPEEDPOST_SERVER=http://localhost:3080` pour pointer vers un serveur local).
+Les pages de la vitrine sont générées par `npm run site` (en-tête et pied de page communs, `scripts/build-site.mjs`).
 
 ## Développement
 
 ```bash
 npm install
-npm test          # API, chiffrement, moteur d'envoi de l'application Windows
+npm test          # API, chiffrement, site
 PORT=3080 npm start
 ```
 

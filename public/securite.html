@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Comment SpeedPost chiffre vos fichiers : AES-256-GCM, clé unique par envoi conservée uniquement dans le lien.">
+  <meta name="theme-color" content="#4f46e5">
+  <meta property="og:title" content="Sécurité — SpeedPost">
+  <meta property="og:description" content="Comment SpeedPost chiffre vos fichiers : AES-256-GCM, clé unique par envoi conservée uniquement dans le lien.">
+  <title>Sécurité — SpeedPost</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body>
+  <header class="nav"><div class="wrap">
+    <a class="brand" href="/"><img src="/favicon.svg" alt=""><span>Speed<b>Post</b></span></a>
+    <button class="menu" type="button" aria-label="Menu" aria-expanded="false">☰</button>
+    <nav class="links"><a href="/">Accueil</a><a href="/fonctionnalites.html">Fonctionnalités</a><a href="/securite.html" aria-current="page">Sécurité</a><a href="/telecharger.html">Applications</a><a href="/faq.html">FAQ</a><a class="btn small" href="/app">Envoyer des fichiers</a></nav>
+  </div></header>
+  <main>
+    <div class="wrap page-head"><span class="eyebrow">🔐 Sécurité</span><h1>Vos fichiers ne sont lisibles qu'avec votre lien</h1><p class="sub">Voici exactement ce qui est protégé, et comment.</p></div>
+    <section style="padding-top:8px"><div class="wrap split">
+      <div>
+        <h2>Une clé par envoi, uniquement dans le lien</h2>
+        <p class="sub">À chaque envoi, votre appareil génère une clé aléatoire de 256 bits. Elle est placée après le « # » du lien : cette partie n'est jamais transmise quand on ouvre la page, et le serveur ne l'enregistre jamais.</p>
+        <ul class="checks">
+          <li>Fichiers chiffrés en AES-256-GCM, par blocs authentifiés de 1 Mio</li>
+          <li>Noms de fichiers, titre, message et e-mails chiffrés eux aussi</li>
+          <li>Toute modification ou troncature d'un fichier est détectée</li>
+          <li>Téléchargement déchiffré à la volée : aucun fichier en clair sur le disque</li>
+          <li>Pas de journal des liens côté serveur (configuration fournie)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <p class="muted" style="margin-top:0">Anatomie d'un lien</p>
+        <p style="font-family:ui-monospace,monospace;word-break:break-all;font-size:15px">https://<span class="here-host">speedpost</span>/d/<span class="pill">Ck7i8zQ2olQM</span>#<span class="pill" style="background:color-mix(in srgb,#ec4899 18%,transparent);color:#f472b6">FYGW6QagFt8ydek_STYQ…</span></p>
+        <p class="muted">🟦 Identifiant de l'envoi — connu du serveur.<br>🟪 Clé de déchiffrement — connue de vous seul et des personnes à qui vous donnez le lien.</p>
+      </div>
+    </div></section>
+    <section class="alt"><div class="wrap grid">
+      <div class="card"><div class="ic">🛡️</div><h3>Ce qui est protégé</h3><p>Les fichiers stockés : vol du disque, sauvegardes, accès au serveur. Sans le lien, un administrateur ne voit que des données chiffrées et des tailles.</p></div>
+      <div class="card"><div class="ic">⚠️</div><h3>Ce qu'il faut savoir</h3><p>Pendant un envoi ou un téléchargement, le serveur utilise la clé en mémoire, le temps de la requête. Perdre le lien, c'est perdre l'accès aux fichiers.</p></div>
+      <div class="card"><div class="ic">🔑</div><h3>Défense en profondeur</h3><p>Mot de passe facultatif (scrypt), limite de téléchargements, expiration, jetons signés à durée limitée, en-têtes de sécurité stricts.</p></div>
+    </div></section>
+    <section><div class="wrap"><div class="band">
+      <h2>Prêt à envoyer ?</h2>
+      <p class="sub" style="margin-inline:auto">Aucun compte, aucune installation : glissez vos fichiers, copiez le lien.</p>
+      <div class="cta" style="justify-content:center"><a class="btn" href="/app">🚀 Envoyer des fichiers</a><a class="btn ghost" href="/telecharger.html">Applications Windows &amp; Linux</a></div>
+    </div></div></section>
+  </main>
+  <footer><div class="wrap">
+    <div><strong>SpeedPost</strong> — envoi de fichiers chiffré, auto-hébergé.</div>
+    <nav><a href="/app">Application web</a><a href="/telecharger.html">Windows &amp; Linux</a><a href="/securite.html">Sécurité</a><a href="/faq.html">FAQ</a><a href="/confidentialite.html">Confidentialité</a></nav>
+  </div></footer>
+  <script src="/site.js"></script>
+</body>
+</html>

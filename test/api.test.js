@@ -91,6 +91,19 @@ test('serveur privé : mot de passe d\'envoi requis', async () => {
   assert.equal(JSON.parse((await priv.inject({ method: 'GET', url: '/api/config' })).body).needsPassword, true);
   const page = await priv.inject({ method: 'GET', url: '/d/abcdefghij' });
   assert.equal(page.statusCode, 200);
+  assert.match(page.body, /app\.js/);
   assert.match(page.headers['content-security-policy'], /script-src 'self'/);
+  // site vitrine + application
+  assert.match((await priv.inject({ method: 'GET', url: '/' })).body, /Vos fichiers, <span class="grad">/);
+  assert.match((await priv.inject({ method: 'GET', url: '/app' })).body, /app\.js/);
+  for (const f of ['fonctionnalites', 'securite', 'telecharger', 'faq', 'confidentialite']) assert.equal((await priv.inject({ method: 'GET', url: `/${f}.html` })).statusCode, 200, f);
+  // applications déposées sur le serveur
+  fs.mkdirSync(path.join(dir, 'downloads'), { recursive: true });
+  fs.writeFileSync(path.join(dir, 'downloads', 'SpeedPost-1.0.0-x64-nsis.exe'), 'MZ');
+  fs.writeFileSync(path.join(dir, 'downloads', 'notes.txt'), 'ignoré');
+  const dl = JSON.parse((await priv.inject({ method: 'GET', url: '/api/downloads' })).body);
+  assert.deepEqual(dl.files.map((f) => [f.name, f.platform]), [['SpeedPost-1.0.0-x64-nsis.exe', 'windows']]);
+  assert.equal((await priv.inject({ method: 'GET', url: '/downloads/SpeedPost-1.0.0-x64-nsis.exe' })).body, 'MZ');
+  assert.equal((await priv.inject({ method: 'GET', url: '/downloads/..%2Fspeedpost.db' })).statusCode, 404);
   await priv.close(); fs.rmSync(dir, { recursive: true, force: true });
 });

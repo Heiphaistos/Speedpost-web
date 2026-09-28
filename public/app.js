@@ -53,7 +53,7 @@ function page(title, subtitle, ...content) {
   $app.replaceChildren(el('div', { class: 'head' }, el('h1', {}, title), subtitle ? el('div', { class: 'sub' }, subtitle) : null), el('div', { class: 'body' }, ...content));
 }
 function fail(title, message) {
-  page(title, null, el('div', { class: 'hero' }, '🔗'), el('p', { class: 'err center' }, message), el('a', { class: 'btn ghost', href: '/' }, '📤 Envoyer des fichiers'));
+  page(title, null, el('div', { class: 'hero' }, '🔗'), el('p', { class: 'err center' }, message), el('a', { class: 'btn ghost', href: '/app' }, '📤 Envoyer des fichiers'));
 }
 
 // ------------------------------------------------------------------ Envoi
@@ -183,7 +183,7 @@ function donePage(entry, meta = {}) {
   const text = `${meta.message ? `${meta.message}\n\n` : ''}Téléchargez les fichiers ici : ${entry.url}\n(disponible jusqu'au ${fmtDate(entry.expiresAt)})${meta.from ? `\n\n${meta.from}` : ''}`;
   if (!meta.mailed) actions.append(el('a', { class: 'btn ghost', href: `mailto:${meta.to ? encodeURIComponent(meta.to).replace(/%40/g, '@').replace(/%2C/gi, ',') : ''}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}` }, '✉️ Par e-mail'));
   actions.append(el('a', { class: 'btn ghost', href: entry.url.replace(/^https?:\/\/[^/]+/, ''), target: '_blank', rel: 'noopener noreferrer' }, '👁️ Aperçu'));
-  actions.append(el('a', { class: 'btn ghost', href: '/' }, '📤 Nouvel envoi'));
+  actions.append(el('a', { class: 'btn ghost', href: '/app' }, '📤 Nouvel envoi'));
   page('C\'est en ligne ✅', `${entry.count} fichier${entry.count > 1 ? 's' : ''} · ${fmtSize(entry.size)} · jusqu'au ${fmtDate(entry.expiresAt)}`,
     el('div', { class: 'hero' }, '🚀'),
     el('p', { class: 'center' }, 'Partagez ce lien — c\'est tout ce qu\'il faut pour télécharger :'),
@@ -246,7 +246,7 @@ function sentPage() {
         } }, '🗑️')))) : [el('p', { class: 'muted center' }, 'Aucun envoi depuis cet appareil.')]));
   };
   draw();
-  page('Mes envois', `${items.length} envoi(s) gardé(s) sur cet appareil`, listEl, el('a', { class: 'btn', href: '/' }, '📤 Nouvel envoi'));
+  page('Mes envois', `${items.length} envoi(s) gardé(s) sur cet appareil`, listEl, el('a', { class: 'btn', href: '/app' }, '📤 Nouvel envoi'));
 }
 
 function route() {

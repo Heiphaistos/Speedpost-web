@@ -1,16 +1,19 @@
 {
-  "name": "speedpost",
+  "name": "speedpost-web",
   "version": "1.0.0",
   "description": "Transfert de fichiers chiffré auto-hébergé (façon WeTransfer / SwissTransfer)",
   "type": "module",
   "private": true,
   "license": "MIT",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
     "test": "node --test test/*.test.js",
-    "check": "node --check src/server.js && node --check public/app.js"
+    "check": "node --check src/server.js && node --check public/app.js && node --check public/site.js",
+    "site": "node scripts/build-site.mjs"
   },
   "dependencies": {
     "@fastify/rate-limit": "^10.3.0",

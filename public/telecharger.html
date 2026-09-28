@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Téléchargez SpeedPost pour Windows (installateur ou portable) et Linux (AppImage, .deb).">
+  <meta name="theme-color" content="#4f46e5">
+  <meta property="og:title" content="Applications Windows et Linux — SpeedPost">
+  <meta property="og:description" content="Téléchargez SpeedPost pour Windows (installateur ou portable) et Linux (AppImage, .deb).">
+  <title>Applications Windows et Linux — SpeedPost</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body>
+  <header class="nav"><div class="wrap">
+    <a class="brand" href="/"><img src="/favicon.svg" alt=""><span>Speed<b>Post</b></span></a>
+    <button class="menu" type="button" aria-label="Menu" aria-expanded="false">☰</button>
+    <nav class="links"><a href="/">Accueil</a><a href="/fonctionnalites.html">Fonctionnalités</a><a href="/securite.html">Sécurité</a><a href="/telecharger.html" aria-current="page">Applications</a><a href="/faq.html">FAQ</a><a class="btn small" href="/app">Envoyer des fichiers</a></nav>
+  </div></header>
+  <main>
+    <div class="wrap page-head"><span class="eyebrow">⬇️ Applications</span><h1>SpeedPost sur votre ordinateur</h1><p class="sub">Envoyez un fichier en deux clics depuis l'explorateur, le lien est copié tout seul. Gratuit et open source.</p></div>
+    <section style="padding-top:8px"><div class="wrap">
+      <div class="dl">
+        <div class="card" data-os="windows"><div class="os">🪟</div><h2 style="font-size:26px;margin:0">Windows</h2>
+          <p class="muted">Windows 10 et 11 (64 bits). Installateur ou version portable sans installation. Clic droit → <em>Envoyer vers → SpeedPost</em>.</p>
+          <div class="files" data-files="windows"><span class="muted">Recherche des versions…</span></div></div>
+        <div class="card" data-os="linux"><div class="os">🐧</div><h2 style="font-size:26px;margin:0">Linux</h2>
+          <p class="muted">AppImage (toutes distributions) ou paquet .deb (Debian, Ubuntu, Mint). Clic droit → <em>Ouvrir avec → SpeedPost</em>.</p>
+          <div class="files" data-files="linux"><span class="muted">Recherche des versions…</span></div></div>
+        <div class="card"><div class="os">🌐</div><h2 style="font-size:26px;margin:0">Navigateur</h2>
+          <p class="muted">Rien à installer : fonctionne sur ordinateur, tablette et téléphone.</p>
+          <div class="files"><a class="btn" href="/app">Ouvrir l'application web</a></div></div>
+      </div>
+    </div></section>
+    <section class="alt"><div class="wrap prose">
+      <h2>Premier lancement</h2>
+      <p>Dans <strong>Réglages</strong>, indiquez l'adresse de ce site : <code class="here-url">https://…</code>. Si le serveur est privé, saisissez aussi le mot de passe d'envoi : il est mémorisé.</p>
+      <h2>Linux</h2>
+      <p>AppImage : rendez le fichier exécutable (<code>chmod +x SpeedPost-*.AppImage</code>) puis lancez-le. Paquet .deb : <code>sudo apt install ./SpeedPost-*.deb</code>.</p>
+      <h2>Windows : avertissement SmartScreen</h2>
+      <p>L'application n'étant pas signée par un certificat payant, Windows peut afficher « Windows a protégé votre ordinateur ». Cliquez sur <em>Informations complémentaires → Exécuter quand même</em>.</p>
+    </div></section>
+  </main>
+  <footer><div class="wrap">
+    <div><strong>SpeedPost</strong> — envoi de fichiers chiffré, auto-hébergé.</div>
+    <nav><a href="/app">Application web</a><a href="/telecharger.html">Windows &amp; Linux</a><a href="/securite.html">Sécurité</a><a href="/faq.html">FAQ</a><a href="/confidentialite.html">Confidentialité</a></nav>
+  </div></footer>
+  <script src="/site.js"></script>
+</body>
+</html>

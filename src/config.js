@@ -25,6 +25,10 @@ export function loadConfig(env = process.env) {
     smtpUrl: env.SMTP_URL || '',
     mailFrom: env.MAIL_FROM || '',
     appName: env.APP_NAME || 'SpeedPost',
+    // Applications à télécharger (déposez-y les .exe, .AppImage, .deb) et repli sur les releases GitHub
+    downloadsDir: path.resolve(env.DOWNLOADS_DIR || path.join(dataDir, 'downloads')),
+    windowsReleases: env.WINDOWS_RELEASES_URL || 'https://github.com/Heiphaistos/SpeedPost-Windows/releases/latest',
+    linuxReleases: env.LINUX_RELEASES_URL || 'https://github.com/Heiphaistos/SpeedPost-Linux/releases/latest',
     secret: env.SECRET || '',
   };
 }

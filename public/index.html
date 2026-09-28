@@ -3,23 +3,70 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="referrer" content="no-referrer">
-  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Envoyez des fichiers volumineux par simple lien. Chiffrés AES-256, sans compte, e-mail facultatif. Web, Windows et Linux.">
   <meta name="theme-color" content="#4f46e5">
-  <title>SpeedPost · envoi de fichiers chiffré</title>
+  <meta property="og:title" content="SpeedPost — envoi de fichiers volumineux, chiffré, sans compte">
+  <meta property="og:description" content="Envoyez des fichiers volumineux par simple lien. Chiffrés AES-256, sans compte, e-mail facultatif. Web, Windows et Linux.">
+  <title>SpeedPost — envoi de fichiers volumineux, chiffré, sans compte</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/site.css">
 </head>
 <body>
-  <header class="top">
-    <a class="brand" href="/" aria-label="SpeedPost, accueil">
-      <svg class="logo" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#818cf8"/><stop offset="1" stop-color="#4f46e5"/></linearGradient></defs><rect width="48" height="48" rx="12" fill="url(#g)"/><path d="M13 24.5 36 14l-7.5 22-5-8.5z" fill="#fff"/><path d="M23.5 27.5 36 14" stroke="#4f46e5" stroke-width="2"/><path d="M6 20h6M4 25h7M7 30h5" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".8"/></svg>
-      <span>Speed<b>Post</b></span>
-    </a>
-    <nav><a href="/#envois" id="nav-sent">Mes envois</a></nav>
-  </header>
-  <main id="app" class="card"><p class="muted pad">Chargement…</p></main>
-  <footer class="foot">🔐 Fichiers chiffrés (AES-256) — la clé n'existe que dans votre lien. Pas de compte, e-mail facultatif.</footer>
-  <script type="module" src="/app.js"></script>
+  <header class="nav"><div class="wrap">
+    <a class="brand" href="/"><img src="/favicon.svg" alt=""><span>Speed<b>Post</b></span></a>
+    <button class="menu" type="button" aria-label="Menu" aria-expanded="false">☰</button>
+    <nav class="links"><a href="/" aria-current="page">Accueil</a><a href="/fonctionnalites.html">Fonctionnalités</a><a href="/securite.html">Sécurité</a><a href="/telecharger.html">Applications</a><a href="/faq.html">FAQ</a><a class="btn small" href="/app">Envoyer des fichiers</a></nav>
+  </div></header>
+  <main>
+    <section class="hero"><div class="wrap">
+      <div>
+        <span class="eyebrow">🔐 Chiffré · sans compte · auto-hébergé</span>
+        <h1>Vos fichiers, <span class="grad">à la vitesse d'un lien.</span></h1>
+        <p class="lead">Glissez vos documents, photos, vidéos ou applications : SpeedPost vous donne un lien à partager. Pas de compte, pas d'e-mail obligatoire, et des fichiers chiffrés que personne d'autre ne peut lire.</p>
+        <div class="cta"><a class="btn" href="/app">🚀 Envoyer des fichiers</a><a class="btn ghost" href="/telecharger.html">⬇️ Windows &amp; Linux</a></div>
+        <div class="trust"><span>✓ Jusqu'à 10 Go par fichier</span><span>✓ Reprise automatique</span><span>✓ Expiration au choix</span></div>
+      </div>
+      <div class="mock" aria-hidden="true">
+        <div class="drop">📤<b>Glissez vos fichiers ici</b>ou cliquez pour les choisir</div>
+        <div class="f">🎬 Vidéo mariage.mp4 <span>3,2 Go</span></div><div class="bar"><i style="width:72%"></i></div>
+        <div class="f">📕 Contrat signé.pdf <span>1,4 Mo</span></div><div class="bar"><i style="width:100%"></i></div>
+        <div class="link"><code><span class="here-host">speedpost</span>/d/Ck7i8zQ2#FYGW6Qag…</code><span class="btn small">📋 Copier</span></div>
+      </div>
+    </div></section>
+
+    <section class="alt"><div class="wrap center">
+      <h2>Trois étapes, zéro prise de tête</h2>
+      <p class="sub">Pas d'inscription, pas de formulaire interminable.</p>
+      <div class="steps" style="text-align:left">
+        <div class="card"><h3>Déposez</h3><p>Glissez un ou plusieurs fichiers dans la page, ou faites clic droit → <em>Envoyer vers SpeedPost</em> sur votre ordinateur.</p></div>
+        <div class="card"><h3>Envoyez</h3><p>Les fichiers partent par morceaux et sont chiffrés à l'arrivée. Une coupure ? L'envoi reprend tout seul.</p></div>
+        <div class="card"><h3>Partagez le lien</h3><p>Collez-le dans un message, un chat, un SMS… ou envoyez-le par e-mail si vous préférez.</p></div>
+      </div>
+    </div></section>
+
+    <section><div class="wrap">
+      <h2>Tout ce qu'il faut, rien de trop</h2>
+      <p class="sub">Pensé pour envoyer vite des documents, des applications, des photos ou des vidéos, à soi-même ou aux autres.</p>
+      <div class="grid">
+        <div class="card"><div class="ic">🔐</div><h3>Chiffrement AES-256</h3><p>Une clé unique par envoi, qui n'existe que dans votre lien. Le serveur ne la garde jamais.</p></div>
+        <div class="card"><div class="ic">🙅</div><h3>Sans compte</h3><p>Aucune inscription. L'e-mail est facultatif : un lien suffit.</p></div>
+        <div class="card"><div class="ic">📦</div><h3>Gros fichiers</h3><p>Jusqu'à 10 Go par fichier et 200 fichiers par envoi (réglable sur votre serveur).</p></div>
+        <div class="card"><div class="ic">⏳</div><h3>Vous gardez la main</h3><p>Expiration, nombre de téléchargements, mot de passe, suppression à tout moment.</p></div>
+        <div class="card"><div class="ic">🪟</div><h3>Web, Windows, Linux</h3><p>Dans le navigateur, ou avec les applications de bureau qui copient le lien automatiquement.</p></div>
+        <div class="card"><div class="ic">🏠</div><h3>Chez vous</h3><p>Hébergé sur votre propre serveur : vos fichiers ne passent par aucun service tiers.</p></div>
+      </div>
+      <p class="center" style="margin-top:28px"><a href="/fonctionnalites.html">Voir toutes les fonctionnalités →</a></p>
+    </div></section>
+    <section><div class="wrap"><div class="band">
+      <h2>Prêt à envoyer ?</h2>
+      <p class="sub" style="margin-inline:auto">Aucun compte, aucune installation : glissez vos fichiers, copiez le lien.</p>
+      <div class="cta" style="justify-content:center"><a class="btn" href="/app">🚀 Envoyer des fichiers</a><a class="btn ghost" href="/telecharger.html">Applications Windows &amp; Linux</a></div>
+    </div></div></section>
+  </main>
+  <footer><div class="wrap">
+    <div><strong>SpeedPost</strong> — envoi de fichiers chiffré, auto-hébergé.</div>
+    <nav><a href="/app">Application web</a><a href="/telecharger.html">Windows &amp; Linux</a><a href="/securite.html">Sécurité</a><a href="/faq.html">FAQ</a><a href="/confidentialite.html">Confidentialité</a></nav>
+  </div></footer>
+  <script src="/site.js"></script>
 </body>
 </html>
