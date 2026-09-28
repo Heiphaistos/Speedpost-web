@@ -1,6 +1,6 @@
 # SpeedPost — Web
 
-Serveur, **site vitrine** et **application web** de SpeedPost. Applications de bureau : [SpeedPost-Windows](https://github.com/Heiphaistos/SpeedPost-Windows) · [SpeedPost-Linux](https://github.com/Heiphaistos/SpeedPost-Linux).
+Serveur, **site vitrine** et **application web** de SpeedPost. Applications de bureau : [SpeedPost-Windows](https://github.com/Heiphaistos/Speedpost-windows-) · [SpeedPost-Linux](https://github.com/Heiphaistos/Speedpost-linux).
 
 Transfert de fichiers **chiffré et auto-hébergé**, façon WeTransfer / SwissTransfer : on dépose des fichiers, on obtient **un simple lien** à partager. Pas de compte, e-mail facultatif.
 
@@ -20,7 +20,7 @@ Transfert de fichiers **chiffré et auto-hébergé**, façon WeTransfer / SwissT
 1. Créez l'enregistrement DNS `speedpost.mondomaine.fr` (type A) vers l'IP du VPS.
 2. Sur le VPS :
    ```bash
-   git clone https://github.com/Heiphaistos/SpeedPost-Web.git && cd SpeedPost-Web
+   git clone https://github.com/Heiphaistos/Speedpost-web.git && cd SpeedPost-Web
    sudo bash deploy/install.sh speedpost.mondomaine.fr
    ```
    Le script installe Node 22, nginx et le certificat HTTPS (Let's Encrypt), crée le service `speedpost` (systemd) et stocke les données dans `/var/lib/speedpost`.
