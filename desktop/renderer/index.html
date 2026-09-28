@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'">
+  <title>SpeedPost</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { padding-bottom: 12px; }
+    .tabs { display: flex; gap: 4px; }
+    .tabs button { background: transparent; color: var(--muted); box-shadow: none; padding: 8px 12px; }
+    .tabs button.on { color: var(--fg); background: var(--card2); }
+    .top { padding: 14px 0; }
+    .progress { height: 8px; background: var(--line); border-radius: 99px; overflow: hidden; }
+    .progress i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width .2s; }
+    .speed { display: flex; justify-content: space-between; color: var(--muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="brand"><img class="logo" src="logo.svg" alt=""><span>Speed<b>Post</b></span></div>
+    <nav class="tabs" aria-label="Sections">
+      <button type="button" data-tab="send" class="on">Envoyer</button>
+      <button type="button" data-tab="history">Mes envois</button>
+      <button type="button" data-tab="settings">Réglages</button>
+    </nav>
+  </header>
+  <main id="app" class="card"></main>
+  <script src="renderer.js"></script>
+</body>
+</html>

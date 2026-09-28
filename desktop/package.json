@@ -1,0 +1,35 @@
+{
+  "name": "speedpost-desktop",
+  "productName": "SpeedPost",
+  "version": "1.0.0",
+  "description": "SpeedPost pour Windows : envoi de fichiers chiffré par simple lien",
+  "main": "main.cjs",
+  "private": true,
+  "license": "MIT",
+  "author": "Heiphaistos",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win nsis portable --publish never"
+  },
+  "devDependencies": {
+    "electron": "^44.4.5",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "fr.speedpost.app",
+    "productName": "SpeedPost",
+    "artifactName": "SpeedPost-${version}-${arch}-${target}.${ext}",
+    "files": ["main.cjs", "preload.cjs", "uploader.cjs", "renderer/**", "build/icon.png"],
+    "directories": { "buildResources": "build", "output": "dist" },
+    "win": { "target": [{ "target": "nsis", "arch": ["x64"] }, { "target": "portable", "arch": ["x64"] }], "icon": "build/icon.png" },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "SpeedPost",
+      "include": "build/installer.nsh"
+    }
+  }
+}
