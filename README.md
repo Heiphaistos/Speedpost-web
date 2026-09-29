@@ -20,15 +20,16 @@ Transfert de fichiers **chiffré et auto-hébergé**, façon WeTransfer / SwissT
 1. Créez l'enregistrement DNS `speedpost.mondomaine.fr` (type A) vers l'IP du VPS.
 2. Sur le VPS :
    ```bash
-   git clone https://github.com/Heiphaistos/Speedpost-web.git && cd SpeedPost-Web
-   sudo bash deploy/install.sh speedpost.mondomaine.fr
+   git clone https://github.com/Heiphaistos/Speedpost-web.git && cd Speedpost-web
+   sudo bash deploy/install.sh speedpost.mondomaine.fr            # envoi ouvert à tous
+   sudo bash deploy/install.sh speedpost.mondomaine.fr MotDePasse # serveur privé
    ```
    Le script installe Node 22, nginx et le certificat HTTPS (Let's Encrypt), crée le service `speedpost` (systemd) et stocke les données dans `/var/lib/speedpost`.
 3. Réglages : `/opt/speedpost/.env` (voir `.env.example`), puis `sudo systemctl restart speedpost`.
    - `UPLOAD_PASSWORD=` vide : tout le monde peut envoyer (sans compte). Renseigné : serveur privé (le mot de passe est demandé une fois, puis mémorisé).
    - `SMTP_URL` : facultatif, pour que le serveur envoie lui-même le lien par e-mail.
 
-Mise à jour : `git pull && sudo cp -r src public package.json /opt/speedpost/ && cd /opt/speedpost && sudo -u speedpost npm install --omit=dev && sudo systemctl restart speedpost`.
+Mise à jour : `git pull && sudo bash deploy/install.sh speedpost.mondomaine.fr` (le script se relance sans risque : il garde `.env`, les données et le certificat).
 
 Avec Docker : `docker build -t speedpost . && docker run -d -p 127.0.0.1:3080:3080 -v speedpost:/data -e PUBLIC_URL=https://speedpost.mondomaine.fr speedpost` (derrière nginx : `deploy/nginx.conf`).
 
