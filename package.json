@@ -1,6 +1,6 @@
 {
   "name": "speedpost-web",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Transfert de fichiers chiffré auto-hébergé (façon WeTransfer / SwissTransfer)",
   "type": "module",
   "private": true,

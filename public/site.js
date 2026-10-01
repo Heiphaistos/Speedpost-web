@@ -27,3 +27,16 @@ if (holders.length) {
     }
   }).catch(() => { for (const h of holders) h.textContent = 'Liste indisponible.'; });
 }
+
+// Motion « Vitesse » : pause des boucles du héros hors écran ; repli IntersectionObserver si animation-timeline absent.
+if ('IntersectionObserver' in window) {
+  const hero = document.querySelector('.hero');
+  if (hero) new IntersectionObserver((es) => hero.classList.toggle('off', !es[es.length - 1].isIntersecting)).observe(hero);
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const marketing = document.querySelector('main .card, details.q');
+  if (!calm && marketing && !CSS.supports('animation-timeline: view()')) {
+    document.documentElement.classList.add('io');
+    const io = new IntersectionObserver((es) => { for (const e of es) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }, { rootMargin: '0px 0px -8% 0px' });
+    for (const el of document.querySelectorAll('main .card, main .wrap:not(.prose) > h2')) io.observe(el);
+  }
+}

@@ -50,7 +50,7 @@ const card = (ic, h, p) => `<div class="card"><div class="ic">${ic}</div><h3>${h
 
 const pages = {};
 
-pages['index.html'] = page('index.html', 'SpeedPost — envoi de fichiers volumineux, chiffré, sans compte', 'Envoyez des fichiers volumineux par simple lien. Chiffrés AES-256, sans compte, e-mail facultatif. Web, Windows et Linux.', `    <section class="hero"><div class="wrap">
+pages['index.html'] = page('index.html', 'SpeedPost — envoi de fichiers volumineux, chiffré, sans compte', 'Envoyez des fichiers volumineux par simple lien. Chiffrés AES-256, sans compte, e-mail facultatif. Web, Windows et Linux.', `    <section class="hero"><div class="speed" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="plane" aria-hidden="true"></span><div class="wrap">
       <div>
         <span class="eyebrow">🔐 Chiffré · sans compte · auto-hébergé</span>
         <h1>Vos fichiers, <span class="grad">à la vitesse d'un lien.</span></h1>

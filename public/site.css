@@ -101,3 +101,94 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; } footer a { color: var(
 .hero .wrap > * { min-width: 0; }
 @media (max-width: 900px) { .mock { transform: none; } }
 .links a.btn { color: #fff; padding: 9px 14px; }
+
+/* ===== Motion « Vitesse » : CSS seul (scroll-driven + @property), repli IntersectionObserver dans site.js ===== */
+@property --sweep { syntax: '<percentage>'; inherits: false; initial-value: -40%; }
+@property --tilt { syntax: '<angle>'; inherits: false; initial-value: 135deg; }
+:root { --max: 1280px; --streak: #fff; }
+@media (prefers-color-scheme: light) { :root { --streak: var(--accent); } }
+.hero .wrap { width: min(1560px, 100% - clamp(32px, 6vw, 160px)); }
+.grid { grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); }
+main { overflow-x: clip; }
+
+/* Lignes de vitesse du héros (transform seul, pause hors écran via .off) */
+.speed { position: absolute; inset: 0 0 0 46%; z-index: -1; pointer-events: none; overflow: hidden; }
+@media (max-width: 900px) { .speed { inset: auto 0 0 0; height: 48%; } }
+.speed i { position: absolute; left: 0; top: var(--y); width: var(--w, 22vw); height: 3px; border-radius: 3px; opacity: var(--o, .75);
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent2) 75%, transparent) 80%, var(--streak));
+  transform: translateX(-40vw); animation: sp-zoom var(--d, 2.4s) linear var(--l, 0s) infinite; will-change: transform; }
+.speed i:nth-child(1) { --y: 4%; --d: 2.1s; --l: -.4s; }
+.speed i:nth-child(2) { --y: 10%; --d: 3.2s; --l: -1.9s; --w: 34vw; --o: .5; }
+.speed i:nth-child(3) { --y: 17%; --d: 1.7s; --l: -1.1s; --w: 14vw; }
+.speed i:nth-child(4) { --y: 30%; --d: 2.8s; --l: -2.3s; --o: .45; }
+.speed i:nth-child(5) { --y: 47%; --d: 1.5s; --l: -.2s; --w: 18vw; --o: .7; }
+.speed i:nth-child(6) { --y: 62%; --d: 3.6s; --l: -3s; --w: 40vw; --o: .4; height: 4px; }
+.speed i:nth-child(7) { --y: 78%; --d: 2.2s; --l: -1.5s; }
+.speed i:nth-child(8) { --y: 87%; --d: 1.9s; --l: -.7s; --w: 12vw; --o: .6; }
+.speed i:nth-child(9) { --y: 93%; --d: 3s; --l: -2.6s; --w: 30vw; --o: .45; }
+.speed i:nth-child(10) { --y: 98%; --d: 2.5s; --l: -1.2s; --o: .45; }
+@keyframes sp-zoom { to { transform: translateX(100vw); } }
+/* L'avion en papier du logo traverse le haut du héros avec sa traînée */
+.plane { position: absolute; top: 30px; left: 0; width: 30px; height: 30px; pointer-events: none; background: url(/favicon.svg) center / contain no-repeat;
+  transform: translate(-340px, 26px); animation: sp-fly 8s cubic-bezier(.55, 0, .35, 1) 1.4s infinite; }
+.plane::before { content: ''; position: absolute; right: 75%; top: 50%; width: 280px; height: 3px; margin-top: -1px; border-radius: 3px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent2) 80%, transparent)); }
+@keyframes sp-fly { 0% { transform: translate(-340px, 26px) rotate(-8deg); } 40%, 100% { transform: translate(calc(100vw + 40px), -6px) rotate(-1deg); } }
+@media (max-width: 900px) { .plane { top: 14px; width: 24px; height: 24px; } .plane::before { width: 160px; } }
+.hero.off .plane, .hero.off .speed i, .hero.off .mock *, .hero.off h1 .grad { animation-play-state: paused; }
+
+/* Typographie cinétique : le titre arrive en trombe, reflet qui file sur « à la vitesse d'un lien. » */
+.hero h1 { animation: sp-in .9s cubic-bezier(.16, 1, .3, 1) both; }
+.hero h1 .grad { display: inline-block; animation: sp-in 1s cubic-bezier(.16, 1, .3, 1) .18s both, sp-sweep 2.2s ease-in-out 1.1s 2 both;
+  background-image: linear-gradient(100deg, transparent calc(var(--sweep) - 9%), color-mix(in srgb, var(--streak) 85%, transparent) var(--sweep), transparent calc(var(--sweep) + 9%)), linear-gradient(90deg, var(--accent2), var(--pink)); }
+.hero .cta, .hero .trust { animation: sp-in .8s cubic-bezier(.16, 1, .3, 1) both; }
+.hero .cta { animation-delay: .25s; } .hero .trust { animation-delay: .35s; }
+@keyframes sp-dash { from { opacity: 0; transform: translateX(min(18vw, 240px)) skewX(-16deg); } 60% { opacity: 1; transform: translateX(-6px) skewX(3deg); } to { opacity: 1; transform: none; } }
+/* Texte du héros : jamais à opacité 0, pour ne pas retarder le LCP */
+@keyframes sp-in { from { opacity: .2; transform: translateX(min(12vw, 160px)) skewX(-16deg); } 60% { opacity: 1; transform: translateX(-4px) skewX(3deg); } to { opacity: 1; transform: none; } }
+@keyframes sp-sweep { from { --sweep: -40%; } to { --sweep: 140%; } }
+
+/* Maquette : les fichiers filent avec une traînée, les barres se remplissent en boucle */
+.mock .f { position: relative; animation: sp-dash .8s cubic-bezier(.16, 1, .3, 1) both; }
+.mock .f::before { content: ''; position: absolute; right: 100%; top: 50%; width: 140px; height: 2px; margin-top: -1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent, var(--accent2)); opacity: 0; animation: sp-trail .9s ease-out both; }
+.mock .f:nth-of-type(2), .mock .f:nth-of-type(2)::before { animation-delay: .5s; } .mock .f:nth-of-type(4), .mock .f:nth-of-type(4)::before { animation-delay: .75s; }
+@keyframes sp-trail { 0%, 30% { opacity: .9; transform: scaleX(1); transform-origin: right; } to { opacity: 0; transform: scaleX(.2); transform-origin: right; } }
+.mock .bar i { transform-origin: left; animation: sp-fill 4.8s cubic-bezier(.3, .7, .2, 1) 1s infinite both; }
+.mock .bar:nth-of-type(5) i { animation-delay: 1.3s; }
+@keyframes sp-fill { 0% { transform: scaleX(0); } 55%, 92% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
+.mock .link { animation: sp-dash .8s cubic-bezier(.16, 1, .3, 1) 1s both; }
+
+/* Boutons : un trait de lumière les traverse au survol */
+.btn { position: relative; overflow: hidden; isolation: isolate; }
+.btn::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; transform: translateX(-110%) skewX(-20deg);
+  background: linear-gradient(100deg, transparent 25%, rgba(255, 255, 255, .38) 50%, transparent 75%); }
+.btn:hover::after { transform: translateX(110%) skewX(-20deg); transition: transform .55s cubic-bezier(.3, .7, .2, 1); }
+.btn.ghost::after { background: linear-gradient(100deg, transparent 25%, color-mix(in srgb, var(--accent2) 30%, transparent) 50%, transparent 75%); }
+
+/* Défilement : jauge de vitesse sous l'en-tête, cartes et titres qui arrivent en trombe (pages vitrine, pas les pages légales) */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    body:has(.card, details.q) .nav::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; transform-origin: left;
+      background: linear-gradient(90deg, var(--accent), var(--pink)); animation: sp-gauge linear both; animation-timeline: scroll(root); }
+    main .card { animation: sp-dash linear both; animation-timeline: view(); animation-range: entry 0% entry 70%; }
+    main :is(.grid, .steps, .dl) > .card:nth-child(3n+2) { animation-range: entry 15% entry 85%; }
+    main :is(.grid, .steps, .dl) > .card:nth-child(3n) { animation-range: entry 30% entry 100%; }
+    main .wrap:not(.prose) > h2 { animation: sp-dash-l linear both; animation-timeline: view(); animation-range: entry 0% entry 100%; }
+    .band { animation: sp-tilt linear both; animation-timeline: view(); background: linear-gradient(var(--tilt), color-mix(in srgb, var(--accent) 28%, var(--card)), color-mix(in srgb, var(--pink) 18%, var(--card))); }
+  }
+}
+@keyframes sp-gauge { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes sp-dash-l { from { opacity: 0; transform: translateX(max(-14vw, -200px)) skewX(14deg); } to { opacity: 1; transform: none; } }
+@keyframes sp-tilt { from { --tilt: 60deg; } to { --tilt: 240deg; } }
+/* Repli sans animation-timeline (Firefox, Safari) : classe .io posée par site.js */
+.io main .card, .io main .wrap:not(.prose) > h2 { transition: opacity .6s ease-out, transform .8s cubic-bezier(.16, 1, .3, 1); }
+.io main .card:not(.in) { opacity: 0; transform: translateX(min(14vw, 200px)) skewX(-14deg); }
+.io main .wrap:not(.prose) > h2:not(.in) { opacity: 0; transform: translateX(max(-14vw, -200px)) skewX(14deg); }
+
+@media (max-width: 600px) { .speed i:nth-child(n+7) { display: none; } .speed i { --w: 40vw; } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .speed { display: none; }
+  *, ::before, ::after { animation: none !important; transition: none !important; }
+}
