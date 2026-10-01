@@ -72,6 +72,7 @@ button:disabled { opacity: .5; cursor: not-allowed; filter: none; }
 .hero { font-size: 46px; text-align: center; line-height: 1; }
 .hidden { display: none !important; }
 .foot { color: var(--muted); font-size: 12px; margin-top: 18px; text-align: center; max-width: 620px; }
+.foot a { color: inherit; }
 .sent { display: grid; gap: 8px; }
 .sent .item { display: grid; grid-template-columns: 1fr auto; gap: 6px 10px; align-items: center; padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--card2); }
 .sent .item .t { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

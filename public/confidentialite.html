@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Données traitées par SpeedPost et durée de conservation.">
+  <meta name="description" content="Données traitées par SpeedPost, durées de conservation et droits RGPD.">
   <meta name="theme-color" content="#4f46e5">
   <meta property="og:title" content="Confidentialité — SpeedPost">
-  <meta property="og:description" content="Données traitées par SpeedPost et durée de conservation.">
+  <meta property="og:description" content="Données traitées par SpeedPost, durées de conservation et droits RGPD.">
   <title>Confidentialité — SpeedPost</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/site.css">
@@ -18,26 +18,41 @@
     <nav class="links"><a href="/">Accueil</a><a href="/fonctionnalites.html">Fonctionnalités</a><a href="/securite.html">Sécurité</a><a href="/telecharger.html">Applications</a><a href="/faq.html">FAQ</a><a class="btn small" href="/app">Envoyer des fichiers</a></nav>
   </div></header>
   <main>
-    <div class="wrap page-head"><span class="eyebrow">📄 Confidentialité</span><h1>Confidentialité</h1></div>
+    <div class="wrap page-head"><span class="eyebrow">📄 Confidentialité</span><h1>Confidentialité</h1><p class="sub">Dernière mise à jour : 1er octobre 2026</p></div>
     <section style="padding-top:8px"><div class="wrap prose">
-      <h2>Ce qui est conservé</h2>
+      <p>En bref : pas de compte, pas de cookie, pas de publicité, pas de mesure d'audience. Vos fichiers sont chiffrés avec une clé qui n'existe que dans votre lien. Cette politique ne concerne que ce site.</p>
+      <h2>Responsable de traitement</h2>
+      <p>L'éditeur du site (voir les <a href="/mentions-legales.html">mentions légales</a>), joignable à <a href="mailto:contact.forgeinformatique@heiphaistos.org" style="word-break:break-all">contact.forgeinformatique@heiphaistos.org</a>.</p>
+      <h2>Ce qui est conservé sur le serveur</h2>
       <ul>
-        <li>Les fichiers, <strong>chiffrés</strong>, jusqu'à leur expiration ou leur suppression.</li>
-        <li>Les informations facultatives que vous saisissez (titre, message, e-mails), <strong>chiffrées</strong> avec la clé du lien.</li>
-        <li>La taille des fichiers, les dates de création et d'expiration, le nombre de téléchargements.</li>
-        <li>Une empreinte (hachage) de l'adresse IP d'envoi, pour limiter les abus.</li>
+        <li>Les fichiers, <strong>chiffrés</strong>, jusqu'à leur expiration (au plus 30 jours sur ce serveur), leur dernier téléchargement autorisé ou leur suppression.</li>
+        <li>Les informations facultatives que vous saisissez (titre, message, votre e-mail, les e-mails des destinataires), <strong>chiffrées</strong> avec la clé du lien.</li>
+        <li>La taille des fichiers, les dates de création et d'expiration, le nombre de téléchargements et, si vous en avez mis un, le mot de passe sous forme hachée (scrypt).</li>
+        <li>Une empreinte (hachage SHA-256) de l'adresse IP d'envoi, pour limiter les abus.</li>
       </ul>
+      <p>Tout est effacé avec l'envoi : à son expiration, quand le nombre de téléchargements choisi est atteint, ou quand vous le supprimez. Base légale : exécution du service que vous demandez (article 6.1.b du RGPD) et intérêt légitime pour la lutte contre les abus (article 6.1.f).</p>
+      <h2>Journaux techniques</h2>
+      <p>Le serveur web ne tient aucun journal d'accès. L'application enregistre, pour chaque requête, l'adresse IP, la date et l'adresse demandée (sans la clé, qui n'est jamais transmise) dans un journal technique tournant limité à 150 Mo, dont les entrées les plus anciennes sont effacées au fur et à mesure. Finalité : sécurité et diagnostic. Base légale : intérêt légitime.</p>
+      <h2>E-mails</h2>
+      <p>Ce serveur n'envoie aucun e-mail : le lien se copie, se partage, ou s'envoie depuis votre propre messagerie.</p>
       <h2>Ce qui n'est pas conservé</h2>
-      <ul><li>La clé de déchiffrement : elle n'existe que dans votre lien.</li><li>Aucun compte, aucun cookie de suivi, aucune statistique tierce.</li><li>Pas de journal des liens de téléchargement (configuration fournie).</li></ul>
+      <ul><li>La clé de déchiffrement : elle n'existe que dans votre lien.</li><li>Aucun compte, aucun cookie, aucune statistique ni service tiers : polices, scripts et styles sont servis par ce site.</li></ul>
       <h2>Sur votre appareil</h2>
-      <p>La liste « Mes envois » (liens et jetons de suppression) est gardée dans votre navigateur ou dans l'application, jamais sur le serveur.</p>
-      <h2>Suppression</h2>
-      <p>Supprimez un envoi à tout moment depuis « Mes envois ». Sinon, il est effacé automatiquement à son expiration.</p>
+      <p>Le stockage local de votre navigateur (ou l'application de bureau) garde la liste « Mes envois » (liens et jetons de suppression), et, si vous les avez saisis, votre adresse e-mail et le mot de passe d'envoi de ce serveur privé. Rien de cela n'est envoyé ailleurs qu'à ce serveur. Effacez les données du site dans votre navigateur pour les supprimer.</p>
+      <h2>Liens externes</h2>
+      <p>La page Applications renvoie vers GitHub pour les anciennes versions ; GitHub ne reçoit rien tant que vous ne cliquez pas.</p>
+      <h2>Contact par e-mail</h2>
+      <p>Si vous écrivez à l'adresse de contact, votre message et votre adresse e-mail sont conservés le temps de traiter la demande, puis 3 ans au maximum.</p>
+      <h2>Destinataires</h2>
+      <p>Les données sont traitées sur un serveur hébergé par IONOS SE dans l'Union européenne. Elles ne sont ni vendues, ni cédées, ni utilisées pour du profilage ou de la publicité.</p>
+      <h2>Vos droits</h2>
+      <p>Vous disposez des droits d'accès, de rectification, d'effacement, de limitation, d'opposition et de portabilité (articles 15 à 22 du RGPD). Pour les exercer : <a href="mailto:contact.forgeinformatique@heiphaistos.org" style="word-break:break-all">contact.forgeinformatique@heiphaistos.org</a> — réponse sous un mois. Vous pouvez aussi supprimer vous-même un envoi depuis « Mes envois ».</p>
+      <p>En cas de désaccord, vous pouvez saisir la CNIL : <a href="https://www.cnil.fr" rel="noopener">cnil.fr</a>.</p>
     </div></section>
   </main>
   <footer><div class="wrap">
     <div><strong>SpeedPost</strong> — envoi de fichiers chiffré, auto-hébergé.</div>
-    <nav><a href="/app">Application web</a><a href="/telecharger.html">Windows &amp; Linux</a><a href="/securite.html">Sécurité</a><a href="/faq.html">FAQ</a><a href="/confidentialite.html">Confidentialité</a></nav>
+    <nav><a href="/app">Application web</a><a href="/telecharger.html">Windows &amp; Linux</a><a href="/securite.html">Sécurité</a><a href="/faq.html">FAQ</a><a href="/mentions-legales.html">Mentions légales</a><a href="/confidentialite.html">Confidentialité</a><a href="/cgu.html">CGU</a></nav>
   </div></footer>
   <script src="/site.js"></script>
 </body>

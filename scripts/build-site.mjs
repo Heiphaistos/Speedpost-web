@@ -1,8 +1,9 @@
 // Génère les pages du site vitrine (en-tête et pied de page communs) : node scripts/build-site.mjs
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const OUT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../public');
+const OUT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../public');
 const NAV = [['index.html', 'Accueil'], ['fonctionnalites.html', 'Fonctionnalités'], ['securite.html', 'Sécurité'], ['telecharger.html', 'Applications'], ['faq.html', 'FAQ']];
 
 function page(file, title, desc, body) {
@@ -31,7 +32,7 @@ ${body}
   </main>
   <footer><div class="wrap">
     <div><strong>SpeedPost</strong> — envoi de fichiers chiffré, auto-hébergé.</div>
-    <nav><a href="/app">Application web</a><a href="/telecharger.html">Windows &amp; Linux</a><a href="/securite.html">Sécurité</a><a href="/faq.html">FAQ</a><a href="/confidentialite.html">Confidentialité</a></nav>
+    <nav><a href="/app">Application web</a><a href="/telecharger.html">Windows &amp; Linux</a><a href="/securite.html">Sécurité</a><a href="/faq.html">FAQ</a><a href="/mentions-legales.html">Mentions légales</a><a href="/confidentialite.html">Confidentialité</a><a href="/cgu.html">CGU</a></nav>
   </div></footer>
   <script src="/site.js"></script>
 </body>
@@ -184,21 +185,86 @@ ${faq.map(([q, a]) => `      <details class="q"><summary>${q}</summary><div>${a}
     </div></section>
 ${CTA}`);
 
-pages['confidentialite.html'] = page('confidentialite.html', 'Confidentialité — SpeedPost', 'Données traitées par SpeedPost et durée de conservation.', `${head('📄 Confidentialité', 'Confidentialité')}
+// Pages légales propres à ce site. Date de mise à jour écrite en dur.
+const UPDATED = '1er octobre 2026';
+const MAIL = '<a href="mailto:contact.forgeinformatique@heiphaistos.org" style="word-break:break-all">contact.forgeinformatique@heiphaistos.org</a>';
+const legalHead = (eyebrow, h1) => head(eyebrow, h1, `Dernière mise à jour : ${UPDATED}`);
+
+pages['mentions-legales.html'] = page('mentions-legales.html', 'Mentions légales — SpeedPost', 'Éditeur, hébergeur et propriété intellectuelle du site SpeedPost.', `${legalHead('📄 Mentions légales', 'Mentions légales')}
     <section style="padding-top:8px"><div class="wrap prose">
-      <h2>Ce qui est conservé</h2>
+      <h2>Éditeur du site</h2>
+      <p>Le site <strong>speedpost.heiphaistos.org</strong> est édité à titre personnel et non professionnel par une personne physique publiant sous le pseudonyme <strong>Heiphaistos</strong>.</p>
+      <p>Conformément à la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique (LCEN, article 6-III-2), l'éditeur, non professionnel, a choisi de préserver son anonymat. Ses éléments d'identification ont été communiqués à l'hébergeur, qui en garantit la confidentialité.</p>
+      <p>Contact : ${MAIL}</p>
+      <h2>Directeur de la publication</h2>
+      <p>L'éditeur du site, tel que désigné ci-dessus.</p>
+      <h2>Hébergement</h2>
+      <p><strong>IONOS SE</strong> — Elgendorfer Str. 57, 56410 Montabaur, Allemagne — Tél. : +49 721 170 555 — <a href="https://www.ionos.fr" rel="noopener">ionos.fr</a></p>
+      <h2>Propriété intellectuelle</h2>
+      <p>Les textes, visuels et logos de ce site sont la propriété de leur éditeur. Le code de SpeedPost est publié sous licence MIT sur GitHub. Les fichiers envoyés restent la propriété de leurs auteurs : l'éditeur ne les consulte pas et ne peut pas les lire (ils sont chiffrés avec une clé qu'il ne possède pas).</p>
+      <h2>Responsabilité</h2>
+      <p>L'éditeur s'efforce de maintenir des informations exactes et à jour, sans pouvoir le garantir. Il ne peut être tenu responsable des erreurs, omissions ou dommages résultant de l'utilisation de ce site.</p>
+      <h2>Signaler un contenu</h2>
+      <p>Pour signaler un fichier illicite (en joignant le lien concerné) ou une erreur : ${MAIL}. L'envoi signalé est supprimé dès que son caractère illicite est établi.</p>
+    </div></section>`);
+
+pages['confidentialite.html'] = page('confidentialite.html', 'Confidentialité — SpeedPost', 'Données traitées par SpeedPost, durées de conservation et droits RGPD.', `${legalHead('📄 Confidentialité', 'Confidentialité')}
+    <section style="padding-top:8px"><div class="wrap prose">
+      <p>En bref : pas de compte, pas de cookie, pas de publicité, pas de mesure d'audience. Vos fichiers sont chiffrés avec une clé qui n'existe que dans votre lien. Cette politique ne concerne que ce site.</p>
+      <h2>Responsable de traitement</h2>
+      <p>L'éditeur du site (voir les <a href="/mentions-legales.html">mentions légales</a>), joignable à ${MAIL}.</p>
+      <h2>Ce qui est conservé sur le serveur</h2>
       <ul>
-        <li>Les fichiers, <strong>chiffrés</strong>, jusqu'à leur expiration ou leur suppression.</li>
-        <li>Les informations facultatives que vous saisissez (titre, message, e-mails), <strong>chiffrées</strong> avec la clé du lien.</li>
-        <li>La taille des fichiers, les dates de création et d'expiration, le nombre de téléchargements.</li>
-        <li>Une empreinte (hachage) de l'adresse IP d'envoi, pour limiter les abus.</li>
+        <li>Les fichiers, <strong>chiffrés</strong>, jusqu'à leur expiration (au plus 30 jours sur ce serveur), leur dernier téléchargement autorisé ou leur suppression.</li>
+        <li>Les informations facultatives que vous saisissez (titre, message, votre e-mail, les e-mails des destinataires), <strong>chiffrées</strong> avec la clé du lien.</li>
+        <li>La taille des fichiers, les dates de création et d'expiration, le nombre de téléchargements et, si vous en avez mis un, le mot de passe sous forme hachée (scrypt).</li>
+        <li>Une empreinte (hachage SHA-256) de l'adresse IP d'envoi, pour limiter les abus.</li>
       </ul>
+      <p>Tout est effacé avec l'envoi : à son expiration, quand le nombre de téléchargements choisi est atteint, ou quand vous le supprimez. Base légale : exécution du service que vous demandez (article 6.1.b du RGPD) et intérêt légitime pour la lutte contre les abus (article 6.1.f).</p>
+      <h2>Journaux techniques</h2>
+      <p>Le serveur web ne tient aucun journal d'accès. L'application enregistre, pour chaque requête, l'adresse IP, la date et l'adresse demandée (sans la clé, qui n'est jamais transmise) dans un journal technique tournant limité à 150 Mo, dont les entrées les plus anciennes sont effacées au fur et à mesure. Finalité : sécurité et diagnostic. Base légale : intérêt légitime.</p>
+      <h2>E-mails</h2>
+      <p>Ce serveur n'envoie aucun e-mail : le lien se copie, se partage, ou s'envoie depuis votre propre messagerie.</p>
       <h2>Ce qui n'est pas conservé</h2>
-      <ul><li>La clé de déchiffrement : elle n'existe que dans votre lien.</li><li>Aucun compte, aucun cookie de suivi, aucune statistique tierce.</li><li>Pas de journal des liens de téléchargement (configuration fournie).</li></ul>
+      <ul><li>La clé de déchiffrement : elle n'existe que dans votre lien.</li><li>Aucun compte, aucun cookie, aucune statistique ni service tiers : polices, scripts et styles sont servis par ce site.</li></ul>
       <h2>Sur votre appareil</h2>
-      <p>La liste « Mes envois » (liens et jetons de suppression) est gardée dans votre navigateur ou dans l'application, jamais sur le serveur.</p>
-      <h2>Suppression</h2>
-      <p>Supprimez un envoi à tout moment depuis « Mes envois ». Sinon, il est effacé automatiquement à son expiration.</p>
+      <p>Le stockage local de votre navigateur (ou l'application de bureau) garde la liste « Mes envois » (liens et jetons de suppression), et, si vous les avez saisis, votre adresse e-mail et le mot de passe d'envoi de ce serveur privé. Rien de cela n'est envoyé ailleurs qu'à ce serveur. Effacez les données du site dans votre navigateur pour les supprimer.</p>
+      <h2>Liens externes</h2>
+      <p>La page Applications renvoie vers GitHub pour les anciennes versions ; GitHub ne reçoit rien tant que vous ne cliquez pas.</p>
+      <h2>Contact par e-mail</h2>
+      <p>Si vous écrivez à l'adresse de contact, votre message et votre adresse e-mail sont conservés le temps de traiter la demande, puis 3 ans au maximum.</p>
+      <h2>Destinataires</h2>
+      <p>Les données sont traitées sur un serveur hébergé par IONOS SE dans l'Union européenne. Elles ne sont ni vendues, ni cédées, ni utilisées pour du profilage ou de la publicité.</p>
+      <h2>Vos droits</h2>
+      <p>Vous disposez des droits d'accès, de rectification, d'effacement, de limitation, d'opposition et de portabilité (articles 15 à 22 du RGPD). Pour les exercer : ${MAIL} — réponse sous un mois. Vous pouvez aussi supprimer vous-même un envoi depuis « Mes envois ».</p>
+      <p>En cas de désaccord, vous pouvez saisir la CNIL : <a href="https://www.cnil.fr" rel="noopener">cnil.fr</a>.</p>
+    </div></section>`);
+
+pages['cgu.html'] = page('cgu.html', "Conditions d'utilisation — SpeedPost", "Conditions générales d'utilisation du service d'envoi de fichiers SpeedPost.", `${legalHead('📄 CGU', "Conditions d'utilisation")}
+    <section style="padding-top:8px"><div class="wrap prose">
+      <p>Les présentes conditions générales d'utilisation (CGU) s'appliquent au site <strong>speedpost.heiphaistos.org</strong>, à son application web et aux applications de bureau lorsqu'elles utilisent ce serveur.</p>
+      <h2>Objet</h2>
+      <p>SpeedPost permet d'envoyer des fichiers chiffrés et de les partager par un lien. Ce serveur est <strong>privé</strong> : l'envoi est réservé aux personnes à qui l'éditeur a confié le mot de passe d'envoi. Le téléchargement est possible pour toute personne disposant d'un lien.</p>
+      <h2>Acceptation</h2>
+      <p>Utiliser le service vaut acceptation des présentes conditions. Si vous ne les acceptez pas, merci de ne pas l'utiliser.</p>
+      <h2>Gratuité</h2>
+      <p>Le service est gratuit, sans compte, sans abonnement ni publicité.</p>
+      <h2>Contenus envoyés</h2>
+      <p>Vous êtes seul responsable des fichiers que vous envoyez et des personnes à qui vous donnez le lien. Il est interdit d'envoyer des contenus illicites : contrefaçon, œuvres partagées sans droit, logiciels malveillants, contenus pédopornographiques, haineux ou portant atteinte à la vie privée d'autrui. L'éditeur ne peut pas lire les fichiers ; sur signalement, il supprime l'envoi concerné, peut retirer l'accès à l'envoi et coopère avec les autorités sur réquisition.</p>
+      <h2>Mot de passe d'envoi</h2>
+      <p>Le mot de passe d'envoi est personnel : ne le diffusez pas. L'éditeur peut le changer à tout moment.</p>
+      <h2>Limites et durée</h2>
+      <p>Jusqu'à 10 Go par fichier et 200 fichiers par envoi, pour une durée de 1 à 30 jours. Les envois expirés sont supprimés définitivement. Perdre le lien, c'est perdre l'accès aux fichiers : aucune récupération n'est possible.</p>
+      <h2>Disponibilité et responsabilité</h2>
+      <p>Le service est fourni « en l'état », sans garantie de disponibilité ni de conservation : gardez toujours une copie de vos fichiers. L'éditeur peut le modifier, le suspendre ou l'arrêter à tout moment, et ne pourra être tenu responsable d'une perte de données ou des dommages directs ou indirects résultant de son utilisation.</p>
+      <h2>Comportement</h2>
+      <p>Il est interdit de tenter de porter atteinte à la sécurité ou à la disponibilité du service (attaque, contournement des limites ou du mot de passe, saturation volontaire de l'espace de stockage).</p>
+      <h2>Modification des conditions</h2>
+      <p>Ces conditions peuvent évoluer ; la date de dernière mise à jour figure en haut de page.</p>
+      <h2>Droit applicable</h2>
+      <p>Les présentes conditions sont régies par le droit français. En cas de litige, une solution amiable sera recherchée avant toute action.</p>
+      <h2>Contact</h2>
+      <p>${MAIL}</p>
     </div></section>`);
 
 for (const [f, html] of Object.entries(pages)) fs.writeFileSync(path.join(OUT, f), html);
