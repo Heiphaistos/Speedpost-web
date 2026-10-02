@@ -4,6 +4,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends python3 make g+
 COPY package.json ./
 RUN npm install --omit=dev --no-audit --no-fund
 FROM node:22-trixie-slim
+# upgrade : l image de base retarde sur les correctifs de securite Debian/Alpine (scan Trivy 2026-10-02).
+RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 COPY --from=build /app/node_modules ./node_modules
 COPY package.json ./
